@@ -1,18 +1,19 @@
 version: '3.8'
 
 services:
+  mongodb: 
+    image: mongo:8.0.12
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123abc
+    restart: always
   api:
     build: .
     ports:
       - "5000:5000"
     volumes:
       - .:/app
-    environment:
-      - FLASK_ENV=development
-  mongodb: 
-    image: mongo:8.0
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     restart: always
+    depends_on:
+      - mongodb
